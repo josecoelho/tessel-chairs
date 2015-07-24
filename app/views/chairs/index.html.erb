@@ -1,0 +1,33 @@
+
+<div class="row">
+  <%= link_to "Add Chair", new_chair_path %>
+</div>
+
+<div class="row">
+
+  <div class="col-md-12">
+    <table id="chairs" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @chairs.each do |item| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td>
+              <%= link_to "Edit", edit_chair_path(item), class: 'btn btn-primary' %>
+              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chair_path(item),
+                            class: 'btn btn-primary',
+                              method: :delete,
+                              data: { confirm: "Are you sure that you want to delete #{item.name}?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<hr/>

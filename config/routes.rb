@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   root "home#index"
 
   resource :session
-  resource :users
-  resource :chairs
+  resources :users
+  resources :chairs
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
