@@ -20,6 +20,12 @@ class ChairsController < ApplicationController
 
   end
 
+  def book
+    @chair = Chair.find(params[:id])
+
+    @chair.book_to current_user
+  end
+
   def edit
     @chair = Chair.find(params[:id])
   end

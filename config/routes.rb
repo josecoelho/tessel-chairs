@@ -7,7 +7,11 @@ Rails.application.routes.draw do
 
   resource :session
   resources :users
-  resources :chairs
+  resources :chairs do
+    member do
+      get :book
+    end
+  end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
