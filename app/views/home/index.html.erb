@@ -2,31 +2,8 @@
   <div class="col-sm-6">
     <% @chairs.each do |c| %>
       <div class="well <%= 'booked' if c.booked? %>">
-        <%= link_to "book #{c.name}" , book_chair_path(c) %>
+        <%= link_to "#{c.chairs_manager_name}: #{c.name}" , book_chair_path(c) %>
       </div>
     <% end %>
   </div>
-
-  <script>
-      var chair = function(msg) {
-        $('#status').html('Sending ' + msg + '...');
-        $.ajax({
-          url: 'http://10.1.0.46:80/' + msg,
-          dataType: 'json',
-          success: function(data) {
-            $('#status').html(data.led + ' set successfully!');
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            $('#status').html('error ' + textStatus + ' ' + errorThrown);
-          },
-          beforeSend: function() {
-            $('.button').attr('disabled', 'disabled');
-          },
-          complete: function() {
-            $('.button').removeAttr('disabled');
-          },
-          timeout: 5000
-        });
-      }
-  </script>
 </div>

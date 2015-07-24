@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :chairs_manager do
+  resources :chairs_managers do
     collection do
       get :register #GET to be simpler for tessel
     end

@@ -1,12 +1,13 @@
 var http    = require('http'),
     querystring = require('querystring'),
-    tessel  = require('tessel')
+    tessel  = require('tessel'),
+    wifi = require('wifi-cc3000');
 
 
 var CONFIG = {
   name: "Line 1",
-  chairs: ["A","B","C"],
-  register_url: "http://chairs.10.1.0.24.xip.io/chair_managers/register"
+  chairs: ["A","B"],
+  register_url: "http://chairs.10.1.0.24.xip.io/chairs_managers/register"
 }
 
 function Chair(port) {
@@ -33,47 +34,67 @@ for (var i = 0; i < CONFIG.chairs.length; i++) {
 function registerMyself() {
   var query = querystring.stringify({
     name: CONFIG.name,
-    chairs: CONFIG.chairs.join()
+    chairs: CONFIG.chairs.join(),
+    url: "http://"+require('os').networkInterfaces().en1[0].address+"/"
   })
 
   var url = CONFIG.register_url+ "?" + query
 
-  console.log("Registering mysql: ",url);
+  console.log("Registering myself: ",url);
 
-  http.get(url)
+  var req = http.get(url, function(res) {
+    console.log("Got response: " + res.statusCode);
+    startServer();
+  }).on('error', function(e) {
+    tessel.led[0].toggle() //show the error
+    console.log("Got error: " + e.message);
+  });
 }
 
-registerMyself();
+function waitUntilConnectedToStart() {
+  if(!wifi.isConnected()) {
+    console.log("Waiting wifi")
+    setTimeout(waitUntilConnectedToStart, 500);
+  } else {
+    registerMyself();
+  }
+}
 
-setTimeout(function() {
+waitUntilConnectedToStart();
 
-  http.createServer(function(req, res) {
+function startServer() {
+  console.log("Starting the server")
+  setTimeout(function() {
+    http.createServer(function(req, res) {
 
-    if (req.method === 'GET') {
-      var params = req.url.split('/')[1]
+      if (req.method === 'GET') {
+        console.log("Receiving data:",req.url)
+        var params = req.url.split('/')[1]
 
-      var params = params.replace('?', '')
+        var params = params.replace('?', '')
 
-      var bookedData = params.split('&')
+        var bookedData = params.split('&')
 
-      // console.log(params)
-      console.log(req.url)
+        // console.log(params)
+        console.log(req.url)
 
-      bookedData.forEach(function(param, index) {
+        bookedData.forEach(function(param, index) {
 
-        var item    = param.split('=')[0],
-            status  = param.split('=')[1]
+          var item    = param.split('=')[0],
+              status  = param.split('=')[1]
 
-        if(chairCollection.hasOwnProperty(item)) {
-          chairCollection[item].bookedStatus(status)
-        }
+          if(chairCollection.hasOwnProperty(item)) {
+            chairCollection[item].bookedStatus(status)
+          }
 
-      })
+        })
 
-      res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
-      res.end('{"led": "done"}');
+        res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});
+        res.end('{"led": "done"}');
 
-    }
-  }).listen(80);
+      }
+    }).listen(80);
 
-}, 10000)
+  }, 10000)
+}
+

@@ -5,8 +5,6 @@ class Chair < ActiveRecord::Base
   belongs_to :chairs_manager
   delegate :name, to: :chairs_manager, prefix: true, allow_nil: true
 
-  after_save :update_tessel
-
   def booked?
     user != nil
   end
@@ -14,6 +12,8 @@ class Chair < ActiveRecord::Base
   def unbook!
     user = nil
     save
+
+    self.update_tessel
   end
 
   def book_to current_user
@@ -21,17 +21,21 @@ class Chair < ActiveRecord::Base
 
     current_user.chair = self
     current_user.save
+
+    self.update_tessel
   end
 
   def update_tessel
-    url = "http://10.1.0.46/"
+    ChairsManager.all.each do |manager|
+      query = {}
+      manager.chairs.each do |chair|
+        query[chair.name] = chair.booked? ? 'booked' : 'vacant'
+      end
 
-    query = {}
-    Chair.all.each do |chair|
-      query[chair.name] = chair.booked? ? 'booked' : 'vacant'
+      Thread.new {
+        Rails.logger.info "GET #{manager.url} #{query}"
+        HTTParty.get(manager.url, query: query)
+      }
     end
-
-    Rails.logger.info "GET #{url} #{query}"
-    HTTParty.get(url, query: query)
   end
 end
