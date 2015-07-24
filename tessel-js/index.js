@@ -6,11 +6,11 @@ function Chair(port) {
   this.greenLight = tessel.port[port].digital[2];
   this.bookedStatus = function(status) {
     if (status == "booked") {
-      this.greenLight.output(0)
-      this.redLight.output(1)
-    } else {
       this.greenLight.output(1)
       this.redLight.output(0)
+    } else {
+      this.greenLight.output(0)
+      this.redLight.output(1)
     }
   }
 }
