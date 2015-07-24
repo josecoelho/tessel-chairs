@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-6">
     <% @chairs.each do |c| %>
-      <div class="well">
+      <div class="well <%= 'booked' if c.booked? %>">
         <%= link_to "book #{c.name}" , book_chair_path(c) %>
       </div>
     <% end %>

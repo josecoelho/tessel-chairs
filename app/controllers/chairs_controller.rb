@@ -23,7 +23,14 @@ class ChairsController < ApplicationController
   def book
     @chair = Chair.find(params[:id])
 
-    @chair.book_to current_user
+    begin
+      @chair.book_to current_user
+    rescue Exception => e
+      flash[:error] = e.message
+    end
+
+
+    redirect_to root_url
   end
 
   def edit

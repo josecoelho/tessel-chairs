@@ -1,20 +1,28 @@
 class Chair < ActiveRecord::Base
   belongs_to :user
 
+  after_save :update_tessel
+
   def booked?
     user != nil
   end
 
-  def book_to user
+  def book_to current_user
     raise "This chair is already booked to #{self.user.name}" if self.user
 
-    booked_on = Chair.where(user: user)
-    if booked_on
-      booked_on.user = nil
-      booked_on.save
+    current_user.chair = self
+    current_user.save
+  end
+
+  def update_tessel
+    url = "http://10.1.0.46/"
+
+    query = {}
+    Chair.all.each do |chair|
+      query[chair.name] = chair.booked? ? 'booked' : 'vacant'
     end
 
-    self.user = user
-    self.save
+    Rails.logger.info "GET #{url} #{query}"
+    HTTParty.get(url, query: query)
   end
 end
