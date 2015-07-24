@@ -1,9 +1,25 @@
 <div class="row">
   <div class="col-sm-6">
     <% @chairs.each do |c| %>
-      <div class="well <%= 'booked' if c.booked? %>">
+      <div class="col-sm-2 well <%= 'booked' if c.booked? %>">
         <%= link_to "#{c.chairs_manager_name}: #{c.name}" , book_chair_path(c) %>
       </div>
     <% end %>
   </div>
 </div>
+
+
+
+
+  <% (1..12).each do |line| %>
+    <div class="row">
+      <div class="col-sm-2">
+          <%= line %>
+      </div>
+      <% ["A","B","C","D"].each do |chair| %>
+        <div class="col-sm-2 col-offset-1 well booked">
+          <%= link_to "#{chair}" , "#" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
