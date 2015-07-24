@@ -1,5 +1,9 @@
 class Chair < ActiveRecord::Base
   belongs_to :user
+  delegate :name, to: :user, prefix: true, allow_nil: true
+
+  belongs_to :chairs_manager
+  delegate :name, to: :chairs_manager, prefix: true, allow_nil: true
 
   after_save :update_tessel
 

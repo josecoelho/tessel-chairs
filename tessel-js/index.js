@@ -1,5 +1,13 @@
 var http    = require('http'),
+    querystring = require('querystring'),
     tessel  = require('tessel')
+
+
+var CONFIG = {
+  name: "Line 1",
+  chairs: ["A","B","C"],
+  register_url: "http://chairs.10.1.0.24.xip.io/chair_managers/register"
+}
 
 function Chair(port) {
   this.redLight = tessel.port[port].digital[1];
@@ -15,22 +23,39 @@ function Chair(port) {
   }
 }
 
-var chairCollection = {
-  A: new Chair('A'),
-  B: new Chair('B'),
-  C: new Chair('C')
+var chairCollection = {}
+for (var i = 0; i < CONFIG.chairs.length; i++) {
+  var chairName = CONFIG.chairs[i]
+  chairCollection[chairName] = new Chair(chairName)
 }
+
+
+function registerMyself() {
+  var query = querystring.stringify({
+    name: CONFIG.name,
+    chairs: CONFIG.chairs.join()
+  })
+
+  var url = CONFIG.register_url+ "?" + query
+
+  console.log("Registering mysql: ",url);
+
+  http.get(url)
+}
+
+registerMyself();
+
 setTimeout(function() {
 
   http.createServer(function(req, res) {
-   
+
     if (req.method === 'GET') {
-      var params = req.url.split('/')[1]  
+      var params = req.url.split('/')[1]
 
       var params = params.replace('?', '')
-      
+
       var bookedData = params.split('&')
-      
+
       // console.log(params)
       console.log(req.url)
 
@@ -42,7 +67,7 @@ setTimeout(function() {
         if(chairCollection.hasOwnProperty(item)) {
           chairCollection[item].bookedStatus(status)
         }
-        
+
       })
 
       res.writeHead(200, {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'});

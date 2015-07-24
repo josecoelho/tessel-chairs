@@ -14,6 +14,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :chairs_manager do
+    collection do
+      get :register #GET to be simpler for tessel
+    end
+  end
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

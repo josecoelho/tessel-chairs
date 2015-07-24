@@ -1,4 +1,6 @@
 <%= simple_form_for @chair  do |f| %>
   <%= f.input :name %>
+  <%= f.association :user %>
+  <%= f.association :chairs_manager %>
   <%= f.submit %>
 <% end %>

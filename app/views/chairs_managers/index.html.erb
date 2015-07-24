@@ -1,6 +1,6 @@
 
 <div class="row">
-  <%= link_to "Add Chair", new_chair_path %>
+  <%= link_to "Add Chairs Manager", new_chairs_manager_path %>
 </div>
 
 <div class="row">
@@ -10,8 +10,8 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Booked To</th>
-          <th>Manager</th>
+          <th>URL</th>
+          <th>Active</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -19,11 +19,11 @@
         <% @chairs.each do |item| %>
           <tr>
             <td><%= item.name %></td>
-            <td><%= item.user_name %></td>
-            <td><%= item.chairs_manager_name %></td>
+            <td><code><%= item.url %></code></td>
+            <td><%= item.active %></td>
             <td>
               <%= link_to "Edit", edit_chair_path(item), class: 'btn btn-primary' %>
-              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chair_path(item),
+              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chairs_manager_path(item),
                             class: 'btn btn-primary',
                               method: :delete,
                               data: { confirm: "Are you sure that you want to delete #{item.name}?" } %>
