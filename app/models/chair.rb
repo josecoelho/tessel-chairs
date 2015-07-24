@@ -7,6 +7,11 @@ class Chair < ActiveRecord::Base
     user != nil
   end
 
+  def unbook!
+    user = nil
+    save
+  end
+
   def book_to current_user
     raise "This chair is already booked to #{self.user.name}" if self.user
 

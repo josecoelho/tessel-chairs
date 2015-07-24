@@ -20,6 +20,19 @@ class ChairsController < ApplicationController
 
   end
 
+  def unbook
+    @chair = Chair.find(params[:id])
+
+    if @chair.user_id != current_user.id
+      flash[:error] = "Chair #{chair.name} is not yours! What are you trying to do?"
+    else
+      flash[:success] = "Chair #{chair.name} is available now!"
+      @chair.unbook!
+    end
+
+    redirect_to root_url
+  end
+
   def book
     @chair = Chair.find(params[:id])
 
