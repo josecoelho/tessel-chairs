@@ -20,6 +20,7 @@ var chairCollection = {
   B: new Chair('B'),
   C: new Chair('C')
 }
+setTimeout(function() {
 
   http.createServer(function(req, res) {
    
@@ -49,3 +50,5 @@ var chairCollection = {
 
     }
   }).listen(80);
+
+}, 10000)
