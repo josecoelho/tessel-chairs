@@ -5,6 +5,10 @@ class Chair < ActiveRecord::Base
   belongs_to :chairs_manager
   delegate :name, to: :chairs_manager, prefix: true, allow_nil: true
 
+  belongs_to :chair_group
+
+  scope :available, ->(chair_group_id) { where(user_id: nil, chair_group_id: chair_group_id) }
+
   def booked?
     user != nil
   end
@@ -29,7 +33,9 @@ class Chair < ActiveRecord::Base
     ChairsManager.all.each do |manager|
       query = {}
       manager.chairs.each do |chair|
-        query[chair.name] = chair.booked? ? 'booked' : 'vacant'
+        unless chair.name_in_manager.nil?
+          query[chair.name_in_manager] = chair.booked? ? 'booked' : 'vacant'
+        end
       end
 
       Thread.new {

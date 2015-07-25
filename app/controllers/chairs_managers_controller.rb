@@ -25,7 +25,7 @@ class ChairsManagersController < ApplicationController
   def register
     register_params = params.permit(:name, :url, :chairs)
 
-    ChairsManager.register register_params[:name], register_params[:url], register_params[:chairs].split(',')
+    ChairsManager.register register_params[:name], register_params[:url], register_params[:chairs]
 
     render inline: "Success! You are registed"
   end

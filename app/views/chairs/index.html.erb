@@ -1,4 +1,4 @@
-
+<h2>All Chairs</h2>
 <div class="row">
   <%= link_to "Add Chair", new_chair_path %>
 </div>
@@ -12,6 +12,7 @@
           <th>Name</th>
           <th>Booked To</th>
           <th>Manager</th>
+          <th>Name In Manager</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -21,6 +22,7 @@
             <td><%= item.name %></td>
             <td><%= item.user_name %></td>
             <td><%= item.chairs_manager_name %></td>
+            <td><%= item.name_in_manager %></td>
             <td>
               <%= link_to "Edit", edit_chair_path(item), class: 'btn btn-primary' %>
               <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chair_path(item),

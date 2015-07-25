@@ -1,0 +1,35 @@
+<h2>All Chair Group</h2>
+<div class="row">
+  <%= link_to "Add Chair Group", new_chair_group_path %>
+</div>
+
+<div class="row">
+
+  <div class="col-md-12">
+    <table id="chair_groups" class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Count Chairs</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @chair_groups.each do |item| %>
+          <tr>
+            <td><%= item.name %></td>
+            <td><%= item.chairs.count %></td>
+            <td>
+              <%= link_to "Edit", edit_chair_group_path(item), class: 'btn btn-primary' %>
+              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chair_group_path(item),
+                            class: 'btn btn-primary',
+                              method: :delete,
+                              data: { confirm: "Are you sure that you want to delete #{item.name}?" } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+<hr/>

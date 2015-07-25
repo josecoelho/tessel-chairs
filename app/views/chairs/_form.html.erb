@@ -1,6 +1,13 @@
 <%= simple_form_for @chair  do |f| %>
   <%= f.input :name %>
   <%= f.association :user %>
+  <%= f.association :chair_group %>
   <%= f.association :chairs_manager %>
+  <% if @chair.chairs_manager.nil? %>
+    <%= f.input :name_in_manager %>
+  <% else %>
+    <%= f.input :name_in_manager, as: :select, collection: @chair.chairs_manager.available_chairs_arr %>
+  <% end %>
+
   <%= f.submit %>
 <% end %>

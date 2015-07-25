@@ -1,0 +1,5 @@
+<%= simple_form_for @chair_group  do |f| %>
+  <%= f.input :name %>
+  <%= f.association :chairs %>
+  <%= f.submit %>
+<% end %>

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resource :session
   resources :users
+  resources :chair_groups
   resources :chairs do
     member do
       get :book

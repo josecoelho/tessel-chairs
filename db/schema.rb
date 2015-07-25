@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150724090817) do
+ActiveRecord::Schema.define(version: 20150725012532) do
+
+  create_table "chair_groups", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "chairs", force: :cascade do |t|
     t.string   "name"
@@ -19,8 +25,12 @@ ActiveRecord::Schema.define(version: 20150724090817) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "chairs_manager_id"
+    t.string   "name_in_manager"
+    t.integer  "chair_group_id"
   end
 
+  add_index "chairs", ["chair_group_id"], name: "index_chairs_on_chair_group_id"
+  add_index "chairs", ["chairs_manager_id", "name_in_manager"], name: "index_chairs_on_chairs_manager_id_and_name_in_manager"
   add_index "chairs", ["chairs_manager_id"], name: "index_chairs_on_chairs_manager_id"
   add_index "chairs", ["user_id"], name: "index_chairs_on_user_id"
 
@@ -28,8 +38,9 @@ ActiveRecord::Schema.define(version: 20150724090817) do
     t.string   "url"
     t.string   "name"
     t.boolean  "active"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.string   "available_chairs"
   end
 
   create_table "users", force: :cascade do |t|
