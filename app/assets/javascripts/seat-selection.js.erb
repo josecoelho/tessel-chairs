@@ -1,0 +1,15 @@
+$('.seat-select').click(function(e) {
+  e.preventDefault();
+  $('.seat').removeClass('booked')
+  if($(this).hasClass('active')) {
+    $('.confirmation-button').addClass('hidden')
+    $('.seat-select').removeClass('active').children('i').removeClass('glyphicon-ok');
+    $('.seat-'+$(this).attr('data')).removeClass('booked')
+  } else {
+    $('.confirmation-button').removeClass('hidden')
+    $('.seat-select').removeClass('active').children('i').removeClass('glyphicon-ok');
+    $(this).addClass('active');
+    $(this).children('i').addClass('glyphicon-ok');
+    $('.seat-'+$(this).attr('data')).addClass('booked')
+  }
+})

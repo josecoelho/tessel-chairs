@@ -1,0 +1,14 @@
+<div class="well well-sm">
+  <h5 class="screen-title">Screen</h5>
+</div>
+<div class="panel">
+  <% @matrix.each do |line,seats| %>
+    <div class="map-row">
+      <% seats.each do |seat,seat_name| %>
+        <div class="seat seat-<%= seat_name %>">
+          <%= link_to "#{seat_name}" , "#" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

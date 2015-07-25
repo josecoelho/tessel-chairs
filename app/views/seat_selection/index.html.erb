@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="list-group">
+      <div class="list-group-item">
+        Available Seats
+      </div>
+      <% @chairs.each do |c| %>
+        <%= link_to(book_chair_path(c), data: "#{c.name}", class: 'list-group-item seat-select') do %>
+          <%= "#{c.chairs_manager_name}: #{c.name}" %>
+          <i class='seat-select-icon glyphicon pull-right'></i>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render partial: "shared/map" %>
+
+<div class="btn btn-success hidden confirmation-button col-xs-12">
+  Book Seats
+</div>
