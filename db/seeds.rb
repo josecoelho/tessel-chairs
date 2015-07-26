@@ -7,4 +7,9 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-User.create(name:"admin")
+(1..10).each do |line|
+  chair_group = ChairGroup.create(name: line.to_s)
+  ["A","B","C","D","E","F","G","H","I","J","K","L"].each do |seat|
+    Chair.create(name: seat, chair_group: chair_group)
+  end
+end

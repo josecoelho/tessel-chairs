@@ -5,8 +5,8 @@ var http    = require('http'),
 
 
 var CONFIG = {
-  name: "Line 1",
-  chairs: ["A","B"],
+  name: "Tessel 1",
+  chairs: ["A","B","C","D"],
   register_url: "http://chairs.10.1.0.24.xip.io/chairs_managers/register"
 }
 

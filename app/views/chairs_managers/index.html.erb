@@ -11,7 +11,7 @@
         <tr>
           <th>Name</th>
           <th>URL</th>
-          <th>Active</th>
+          <th>Available Chairs</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -20,9 +20,9 @@
           <tr>
             <td><%= item.name %></td>
             <td><code><%= item.url %></code></td>
-            <td><%= item.active %></td>
+            <td><%= item.available_chairs %></td>
             <td>
-              <%= link_to "Edit", edit_chair_path(item), class: 'btn btn-primary' %>
+              <%= link_to "Edit", edit_chairs_manager_path(item), class: 'btn btn-primary' %>
               <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, chairs_manager_path(item),
                             class: 'btn btn-primary',
                               method: :delete,

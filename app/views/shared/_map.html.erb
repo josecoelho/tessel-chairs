@@ -2,13 +2,13 @@
   <h5 class="screen-title">Screen</h5>
 </div>
 <div class="panel">
-  <% @matrix.each do |line,seats| %>
+  <% ChairGroup.all.each do |group| %>
     <div class="map-row">
-      <% seats.each do |seat,seat_name| %>
-        <div class="seat seat-<%= seat_name %>">
-          <%= link_to "#{seat_name}" , "#" %>
+      <% group.chairs.each do |chair| %>
+        <div class="seat seat-<%= chair.id %> <%= 'my-' if chair.user_id == @current_user_id %><%= 'booked' if chair.booked? %>">
+          <%= "#{chair.to_s}" %>
         </div>
       <% end %>
-    </div>
+      </div>
   <% end %>
 </div>

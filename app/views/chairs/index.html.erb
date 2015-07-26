@@ -10,6 +10,7 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Group</th>
           <th>Booked To</th>
           <th>Manager</th>
           <th>Name In Manager</th>
@@ -20,6 +21,7 @@
         <% @chairs.each do |item| %>
           <tr>
             <td><%= item.name %></td>
+            <td><%= item.chair_group %></td>
             <td><%= item.user_name %></td>
             <td><%= item.chairs_manager_name %></td>
             <td><%= item.name_in_manager %></td>

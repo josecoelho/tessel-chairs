@@ -4,9 +4,9 @@
       <div class="list-group-item">
         Available Seats
       </div>
-      <% @chairs.each do |c| %>
-        <%= link_to(book_chair_path(c), data: "#{c.name}", class: 'list-group-item seat-select') do %>
-          <%= "#{c.chairs_manager_name}: #{c.name}" %>
+      <% @available_chairs.each do |c| %>
+        <%= link_to(book_chair_path(c), data: {id: "#{c.id}"}, class: 'list-group-item seat-select') do %>
+          <%= "#{c.to_s}" %>
           <i class='seat-select-icon glyphicon pull-right'></i>
         <% end %>
       <% end %>
@@ -14,8 +14,18 @@
   </div>
 </div>
 
-<%= render partial: "shared/map" %>
 
-<div class="btn btn-success hidden confirmation-button col-xs-12">
-  Book Seats
+<div id="footer" class="container">
+
+    <nav class="navbar navbar-default ">
+        <div class="navbar-inner navbar-content-center">
+            <%= render partial: "shared/map" %>
+
+            <a href="/chairs/{id}/book" class="btn btn-primary hidden confirmation-button col-xs-12">
+              Book Seats
+            </a>
+        </div>
+    </nav>
 </div>
+
+

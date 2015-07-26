@@ -6,8 +6,9 @@ class Chair < ActiveRecord::Base
   delegate :name, to: :chairs_manager, prefix: true, allow_nil: true
 
   belongs_to :chair_group
+  delegate :name, to: :chair_group, prefix: true, allow_nil: true
 
-  scope :available, ->(chair_group_id) { where(user_id: nil, chair_group_id: chair_group_id) }
+  scope :available, ->(){ where(user_id: nil) }
 
   def booked?
     user != nil
@@ -43,5 +44,9 @@ class Chair < ActiveRecord::Base
         HTTParty.get(manager.url, query: query)
       }
     end
+  end
+
+  def to_s
+   "#{chair_group_name}#{name}"
   end
 end

@@ -1,17 +1,19 @@
 class SeatSelectionController < ApplicationController
 
   def index
-    @chairs = Chair.all
+
+    @available_chairs = Chair.available
 
     @matrix = {}
 
-    (1..10).each do |line|
-      @matrix[line] = {} if @matrix[line].nil?
-      ["A","B","C","D","E","F","G","H","I","J","K","L"].each do |seat|
-        @matrix[line][seat] = "#{line}#{seat}"
+    ChairGroup.all.each do |group|
+      @matrix[group.id] = {} if @matrix[group.id].nil?
+      group.chairs.each do |chair|
+        @matrix[group.id][chair.id] = chair
       end
     end
 
+    @current_user_id = current_user.id
   end
 
 end

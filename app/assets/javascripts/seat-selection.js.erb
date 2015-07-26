@@ -1,15 +1,17 @@
 $('.seat-select').click(function(e) {
+  var chairId = $(this).data('id');
   e.preventDefault();
-  $('.seat').removeClass('booked')
+  $('.seat').removeClass('my-booked')
   if($(this).hasClass('active')) {
     $('.confirmation-button').addClass('hidden')
     $('.seat-select').removeClass('active').children('i').removeClass('glyphicon-ok');
-    $('.seat-'+$(this).attr('data')).removeClass('booked')
+    $('.seat-'+$(this).data('id')).removeClass('my-booked')
   } else {
     $('.confirmation-button').removeClass('hidden')
+    $('.confirmation-button').attr('href','/chairs/'+chairId+'/book')
     $('.seat-select').removeClass('active').children('i').removeClass('glyphicon-ok');
     $(this).addClass('active');
     $(this).children('i').addClass('glyphicon-ok');
-    $('.seat-'+$(this).attr('data')).addClass('booked')
+    $('.seat-'+chairId).addClass('my-booked')
   }
 })
