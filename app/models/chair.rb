@@ -10,15 +10,15 @@ class Chair < ActiveRecord::Base
 
   scope :available, ->(){ where(user_id: nil) }
 
+  after_save :update_tessel
+
   def booked?
     user != nil
   end
 
   def unbook!
-    user = nil
+    self.user_id = nil
     save
-
-    self.update_tessel
   end
 
   def book_to current_user
@@ -26,8 +26,6 @@ class Chair < ActiveRecord::Base
 
     current_user.chair = self
     current_user.save
-
-    self.update_tessel
   end
 
   def update_tessel

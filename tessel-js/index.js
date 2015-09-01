@@ -7,7 +7,8 @@ var http    = require('http'),
 var CONFIG = {
   name: "Tessel 1",
   chairs: ["A","B","C","D"],
-  register_url: "http://chairs.10.1.0.24.xip.io/chairs_managers/register"
+  register_required: false,
+  register_url: "http://blablbala/chairs_managers/register"
 }
 
 function Chair(port) {
@@ -48,6 +49,11 @@ function registerMyself() {
   }).on('error', function(e) {
     tessel.led[0].toggle() //show the error
     console.log("Got error: " + e.message);
+    if(!CONFIG.register_required) {
+      console.log("Registration is not required! :)");
+      startServer();
+    }
+
   });
 }
 

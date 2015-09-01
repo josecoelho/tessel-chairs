@@ -11,6 +11,8 @@ class ApplicationController < ActionController::Base
         flash[:error] = "You must be logged in to access this section"
         redirect_to new_session_url
       end
+
+      @current_user = current_user
     end
 
     def current_user

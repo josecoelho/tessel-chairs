@@ -1,4 +1,23 @@
 <div class="row">
+  <div class="container col-xs-12">
+      <a href="#" onclick='location.reload();' class="btn col-xs-6">
+        Refresh
+      </a>
+      <% if @current_user.chair %>
+        <%= link_to 'Unbook my seat', unbook_chair_path(@current_user.chair), class: 'btn btn-warning col-xs-6' %>
+      <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="container col-xs-12">
+      <a href="/chairs/{id}/book" class="btn btn-primary hidden confirmation-button col-xs-12">
+        Book Seats
+      </a>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-xs-12">
     <div class="list-group">
       <div class="list-group-item">
@@ -14,18 +33,10 @@
   </div>
 </div>
 
-
 <div id="footer" class="container">
-
     <nav class="navbar navbar-default ">
         <div class="navbar-inner navbar-content-center">
             <%= render partial: "shared/map" %>
-
-            <a href="/chairs/{id}/book" class="btn btn-primary hidden confirmation-button col-xs-12">
-              Book Seats
-            </a>
         </div>
     </nav>
 </div>
-
-

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  layout "admin", except: [:new, :create]
   skip_before_action :require_login, only: [:new, :create]
 
   def index

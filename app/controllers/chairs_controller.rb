@@ -1,4 +1,5 @@
 class ChairsController < ApplicationController
+  layout "admin", except: [:unbook, :book]
 
   def index
     @chairs = Chair.all
@@ -24,9 +25,9 @@ class ChairsController < ApplicationController
     @chair = Chair.find(params[:id])
 
     if @chair.user_id != current_user.id
-      flash[:error] = "Chair #{chair.name} is not yours! What are you trying to do?"
+      flash[:error] = "Chair #{@chair} is not yours! What are you trying to do?"
     else
-      flash[:success] = "Chair #{chair.name} is available now!"
+      flash[:success] = "Chair #{@chair} is available now!"
       @chair.unbook!
     end
 

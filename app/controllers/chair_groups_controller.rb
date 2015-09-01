@@ -1,4 +1,5 @@
 class ChairGroupsController < ApplicationController
+  layout "admin"
   skip_before_action :require_login, only: [:register]
 
 
